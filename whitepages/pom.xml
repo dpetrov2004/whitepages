@@ -64,7 +64,7 @@
 
 	<build>
 		<plugins>
-			<!-- Necessary for spring-boot -->
+			<!-- Necessary for executable war -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

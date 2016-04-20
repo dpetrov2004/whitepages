@@ -89,7 +89,7 @@ public class WhitepagesApplication {
 		}
 
 		// set storageType
-		/*AppController.getInstance().setCurrentStorageType(StorageType.XML);
+		/*AppController.getInstance().setCurrentStorageType(StorageType.MySQL);
 		switch (AppController.getInstance().getCurrentStorageType()) {
 		case MySQL:
 			// set user specified JPA properties
@@ -108,9 +108,9 @@ public class WhitepagesApplication {
 						"org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, "
 						+ "org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration");
 			break;
-		}*/
+		}
 		// set port for Tomcat
-		System.getProperties().put("server.port", 8012);
+		System.getProperties().put("server.port", 8012);*/
 
 		SpringApplication.run(WhitepagesApplication.class, args);
 	}
