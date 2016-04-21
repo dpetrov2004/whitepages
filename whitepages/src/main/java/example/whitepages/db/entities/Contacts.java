@@ -43,7 +43,25 @@ public class Contacts implements Comparator<Contacts>, Serializable {
 	
 	@Transient // for XML only
 	private List<Contacts> contact;
-
+	
+	public Contacts() {
+		super();
+	}
+	
+	public Contacts(String firstName, String lastName, String sirName, String telephoneMobile, String telephoneHome, 
+			String address, String email, Users creator) {
+		super();
+		
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.sirName = sirName;
+		this.telephoneMobile = telephoneMobile;
+		this.telephoneHome = telephoneHome;
+		this.address = address;
+		this.email = email;
+		this.creator = creator;
+	}
+	
 	// Getters and setters
 	public int getid() {return id;}
 	public void setid(int id) {this.id = id;}

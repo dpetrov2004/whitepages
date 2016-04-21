@@ -35,6 +35,18 @@ public class Users implements Comparator<Users>, Serializable {
 	@Transient // for XML only
 	private List<Users> user;
 
+	public Users() {
+		super();
+	}
+	
+	public Users(String login, String password, String fullName) {
+		super();
+		
+		this.login = login;
+		this.password = password;
+		this.fullName = fullName;
+	}
+	
 	// Getters and setters
 	public int getid() {return id;}
 	public void setid(int id) {this.id = id;}

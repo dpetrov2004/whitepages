@@ -20,7 +20,7 @@ public class ContactJPAService implements ContactService {
 	
 	@Override
 	@Transactional
-	public void saveContact(Contacts contact) {
+	public Contacts saveContact(Contacts contact) {
 		// null all empty fields
 		if (contact.gettelephoneHome()=="") {contact.settelephoneHome(null);}
 		if (contact.getaddress()=="") {contact.setaddress(null);}
@@ -33,6 +33,8 @@ public class ContactJPAService implements ContactService {
 		{
 			em.merge(contact);
 		}
+		
+		return contact;
 	}
 	
 	@Override

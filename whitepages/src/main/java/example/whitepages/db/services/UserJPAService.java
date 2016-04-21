@@ -19,7 +19,7 @@ public class UserJPAService implements UserService {
 	
 	@Override
 	@Transactional
-	public void saveUser(Users user) throws DoubleLoginException {
+	public Users saveUser(Users user) throws DoubleLoginException {
 		// check if there is a user with the same login
 		String queryCheck = "SELECT UsersList FROM Users UsersList WHERE UsersList.login='"+user.getlogin()
 			+"' AND UsersList.id!="+user.getid();
@@ -35,6 +35,8 @@ public class UserJPAService implements UserService {
 		{
 			em.merge(user);
 		}
+		
+		return user;
 	}
 	
 	@Override

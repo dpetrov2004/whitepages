@@ -12,7 +12,7 @@ import example.whitepages.utils.IDNotFoundException;
 public class UserJAXBService implements UserService {
 	
 	@Override
-	public void saveUser(Users user) throws Exception {
+	public Users saveUser(Users user) throws Exception {
 		try {
 			Users usersForXML;
 			List<Users> usersList;
@@ -25,9 +25,12 @@ public class UserJAXBService implements UserService {
 							AppController.getInstance().getCurrentUsersXMLFile());
 
 					usersList = usersForXML.getuser();
-					// search for last id
+					// search for last id and also check if there is a user with the same login
 					for (Users x : usersList) {
-						if (x.getid()>lastID) lastID = x.getid(); 
+						if (x.getid()>lastID) lastID = x.getid();
+						if (x.getlogin()==user.getlogin()) {
+							throw new DoubleLoginException("This login is already exist");
+						}
 					}
 				}
 				else {
@@ -65,6 +68,8 @@ public class UserJAXBService implements UserService {
 				AppController.getInstance().getCurrentMarshaller().marshal(
 					usersForXML, AppController.getInstance().getCurrentUsersXMLFile());
 			}
+			
+			return user;
 		} catch (Exception e) {
 			throw e;
 		}
@@ -102,8 +107,7 @@ public class UserJAXBService implements UserService {
 					return x;
 				}
 			}
-			// this cannot be
-			throw new IDNotFoundException("Internal error: user with id "+id+" not found in file");
+			return null;
 		} catch (Exception e) {
 			throw e;
 		}

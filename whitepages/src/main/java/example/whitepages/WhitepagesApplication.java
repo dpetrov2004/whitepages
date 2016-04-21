@@ -93,9 +93,12 @@ public class WhitepagesApplication {
 		switch (AppController.getInstance().getCurrentStorageType()) {
 		case MySQL:
 			// set user specified JPA properties
-			System.getProperties().put("spring.datasource.url", "jdbc:mysql://127.0.0.1:3306/test?useSSL=false");
-			System.getProperties().put("spring.datasource.username", "root");
-			System.getProperties().put("spring.datasource.password", "1234");
+			System.getProperties().put("spring.datasource.driver-class-name", "org.h2.Driver");
+			System.getProperties().put("spring.datasource.url", "jdbc:h2:mem:test");
+			System.getProperties().put("spring.datasource.username", "sa");
+			System.getProperties().put("spring.datasource.password", "");
+			System.getProperties().put("spring.jpa.hibernate.ddl-auto", "create");
+			System.getProperties().put("spring.h2.console.enabled", "true");
 			break;
 		case XML:
 			AppController.getInstance().setCurrentContactsXMLFile(new File("f:\\contactList.xml"));

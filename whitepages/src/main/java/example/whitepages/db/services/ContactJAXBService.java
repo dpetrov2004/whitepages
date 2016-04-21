@@ -3,22 +3,16 @@ package example.whitepages.db.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import example.whitepages.db.ContactService;
-import example.whitepages.db.UserService;
 import example.whitepages.db.entities.Contacts;
 import example.whitepages.utils.AppController;
 import example.whitepages.utils.IDNotFoundException;
 import example.whitepages.web.PageFilters;
 
 public class ContactJAXBService implements ContactService {
-
-	@Inject
-	UserService userService;
 	
 	@Override
-	public void saveContact(Contacts contact) throws Exception {
+	public Contacts saveContact(Contacts contact) throws Exception {
 		// null all empty fields
 		if (contact.gettelephoneHome()=="") {contact.settelephoneHome(null);}
 		if (contact.getaddress()=="") {contact.setaddress(null);}
@@ -72,6 +66,8 @@ public class ContactJAXBService implements ContactService {
 					throw new IDNotFoundException("Internal error: contact with id "+contact.getid()+" not found in file");
 				}
 			}
+			
+			return contact;
 		} catch (Exception e) {
 			throw e;
 		}
@@ -96,7 +92,7 @@ public class ContactJAXBService implements ContactService {
 							&& x.getlastName().toLowerCase().contains(pageFilter.getlastName().toLowerCase())
 							&& (telephoneMobile.contains(pageFilter.gettelephone())
 									|| telephoneHome.contains(pageFilter.gettelephone()))) {
-						x.setcreator(userService.findUser(x.getcreator().getid()));
+						x.setcreator(new UserJAXBService().findUser(x.getcreator().getid()));
 						contactsList.add(x);
 					}	
 				}
@@ -120,8 +116,7 @@ public class ContactJAXBService implements ContactService {
 					return x;
 				}
 			}
-			// this cannot be
-			throw new IDNotFoundException("Internal error: contact with id "+id+" not found in file");
+			return null;
 		} catch (Exception e) {
 			throw e;
 		}
