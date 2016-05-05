@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -16,12 +17,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import example.whitepages.db.ContactService;
 import example.whitepages.db.entities.Contacts;
 import example.whitepages.utils.AppController;
+import example.whitepages.utils.SessionSettings;
 
 @Controller
 public class ContactWebController {
 
 	@Inject
 	private ContactService contactService;
+	
+	@Inject
+	private SessionSettings sessionSettings;
 
 	@RequestMapping("/contactList")
 	public String contactList(@ModelAttribute("pageFilter") PageFilters pageFilter, Map<String, Object> map, 
@@ -41,7 +46,7 @@ public class ContactWebController {
 			Map<String, Object> map, BindingResult result) {
 		if (contactId==0) {
 			Contacts x = new Contacts();
-			x.setcreator(AppController.getInstance().getCurrentUser());
+			x.setcreator(sessionSettings.getCurrentUser());
 			map.put("contact", x);
 		}
 		else {

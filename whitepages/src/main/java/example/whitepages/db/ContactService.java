@@ -3,6 +3,7 @@ package example.whitepages.db;
 import java.util.List;
 
 import example.whitepages.db.entities.Contacts;
+import example.whitepages.utils.SessionSettings;
 import example.whitepages.web.PageFilters;
 
 public interface ContactService {

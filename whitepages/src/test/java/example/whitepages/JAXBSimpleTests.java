@@ -8,13 +8,13 @@ import javax.xml.bind.Unmarshaller;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import example.whitepages.db.ContactService;
 import example.whitepages.db.UserService;
 import example.whitepages.db.entities.Contacts;
 import example.whitepages.db.entities.Users;
@@ -22,13 +22,15 @@ import example.whitepages.db.services.ContactJAXBService;
 import example.whitepages.db.services.UserJAXBService;
 import example.whitepages.utils.AppController;
 import example.whitepages.utils.DoubleLoginException;
+import example.whitepages.utils.SessionSettings;
 import example.whitepages.utils.StorageType;
 import example.whitepages.web.PageFilters;
 
 public class JAXBSimpleTests {
 	
+	SessionSettings sessionSettings = new SessionSettings();
 	UserService userService = new UserJAXBService();
-	ContactService contactService = new ContactJAXBService();
+	ContactJAXBService contactService = new ContactJAXBService();
 	
 	static final Users userListForMock = new Users();
 	static final Contacts contactListForMock = new Contacts();
@@ -115,7 +117,8 @@ public class JAXBSimpleTests {
 		} catch (Exception e) {
 			throw e;
 		}
-		AppController.getInstance().setCurrentUser(creator);
+		sessionSettings.setCurrentUser(creator);
+		contactService.setSessionSettings(sessionSettings);
 		
 		Contacts rightContact = new Contacts("Ivan", "Ivanenko", "Ivanovich", "+380(97)1111111", "", "", "", creator);
 		try {

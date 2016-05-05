@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import example.whitepages.db.ContactService;
 import example.whitepages.db.UserService;
-import example.whitepages.db.entities.Users;
 import example.whitepages.db.services.ContactJAXBService;
 import example.whitepages.db.services.ContactJPAService;
 import example.whitepages.db.services.UserJAXBService;
@@ -20,7 +19,6 @@ import example.whitepages.db.services.UserJPAService;
 public class AppController {
 	
 	private static AppController instance;
-	private Users currentUser;
 	private StorageType currentStorageType;
 	private File currentContactsXMLFile;
 	private File currentUsersXMLFile;
@@ -40,7 +38,7 @@ public class AppController {
 			return new UserJAXBService();
 		else {
 			System.exit(2);
-			return new UserJAXBService();
+			return null;
 		}
 	}
 	
@@ -52,7 +50,7 @@ public class AppController {
 			return new ContactJAXBService();
 		else {
 			System.exit(2);
-			return new ContactJAXBService();
+			return null;
 		}
 	}
 	
@@ -68,12 +66,6 @@ public class AppController {
 		return instance;			
 	}
 	
-	public Users getCurrentUser() {
-		return currentUser;
-	}
-	public void setCurrentUser(Users user) {
-		currentUser = user;
-	}
 	public StorageType getCurrentStorageType() {
 		return currentStorageType;
 	}

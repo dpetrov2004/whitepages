@@ -2,6 +2,7 @@ package example.whitepages.db.services;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -9,14 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import example.whitepages.db.ContactService;
 import example.whitepages.db.entities.Contacts;
-import example.whitepages.utils.AppController;
 import example.whitepages.utils.IDNotFoundException;
+import example.whitepages.utils.SessionSettings;
 import example.whitepages.web.PageFilters;
 
 public class ContactJPAService implements ContactService {
 	
 	@PersistenceContext
 	private EntityManager em;
+	
+	@Inject
+	private SessionSettings sessionSettings;
 	
 	@Override
 	@Transactional
@@ -53,7 +57,7 @@ public class ContactJPAService implements ContactService {
 		}
 		if (whereCondition!="") whereCondition=" AND "+whereCondition;
 		return em.createQuery("SELECT ContactsList FROM Contacts ContactsList WHERE ContactsList.creator.id="
-			+AppController.getInstance().getCurrentUser().getid()+whereCondition+" ORDER BY ContactsList.id DESC", Contacts.class).getResultList();
+			+sessionSettings.getCurrentUser().getid()+whereCondition+" ORDER BY ContactsList.id DESC", Contacts.class).getResultList();
 	}
 	
 	@Override

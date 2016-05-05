@@ -3,13 +3,24 @@ package example.whitepages.db.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import example.whitepages.db.ContactService;
 import example.whitepages.db.entities.Contacts;
 import example.whitepages.utils.AppController;
 import example.whitepages.utils.IDNotFoundException;
+import example.whitepages.utils.SessionSettings;
 import example.whitepages.web.PageFilters;
 
 public class ContactJAXBService implements ContactService {
+	
+	@Inject
+	private SessionSettings sessionSettings;
+	
+	// for test only
+	public void setSessionSettings(SessionSettings sessionSettings) {
+		this.sessionSettings = sessionSettings;
+	}
 	
 	@Override
 	public Contacts saveContact(Contacts contact) throws Exception {
@@ -87,7 +98,7 @@ public class ContactJAXBService implements ContactService {
 					String telephoneHome = x.gettelephoneHome();
 					if (telephoneMobile==null) telephoneMobile="";
 					if (telephoneHome==null) telephoneHome="";
-					if (x.getcreator().getid()==AppController.getInstance().getCurrentUser().getid() 
+					if (x.getcreator().getid()==sessionSettings.getCurrentUser().getid() 
 							&& x.getfirstName().toLowerCase().contains(pageFilter.getfirstName().toLowerCase())
 							&& x.getlastName().toLowerCase().contains(pageFilter.getlastName().toLowerCase())
 							&& (telephoneMobile.contains(pageFilter.gettelephone())

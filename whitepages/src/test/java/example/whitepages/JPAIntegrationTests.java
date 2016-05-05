@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import example.whitepages.db.ContactService;
 import example.whitepages.db.UserService;
@@ -18,11 +19,13 @@ import example.whitepages.db.entities.Contacts;
 import example.whitepages.db.entities.Users;
 import example.whitepages.utils.AppController;
 import example.whitepages.utils.DoubleLoginException;
+import example.whitepages.utils.SessionSettings;
 import example.whitepages.utils.StorageType;
 import example.whitepages.web.PageFilters;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WhitepagesApplication.class)
+@WebAppConfiguration
 public class JPAIntegrationTests {
 	
 	@Inject
@@ -30,6 +33,9 @@ public class JPAIntegrationTests {
 	
 	@Inject
     private UserService userService;
+	
+	@Inject
+	SessionSettings sessionSettings;
 	
 	@BeforeClass
 	public static void initTest() {
@@ -126,7 +132,7 @@ public class JPAIntegrationTests {
 		} catch (Exception e) {
 			throw e;
 		}
-		AppController.getInstance().setCurrentUser(creator);
+		sessionSettings.setCurrentUser(creator);
 		
 		Contacts rightContact = new Contacts("Ivan", "Ivanenko", "Ivanovich", "+380(97)1111111", "", "", "", creator);
 		try {
