@@ -1,2 +1,2 @@
 # whitepages
-Whitepages test for lardi
+Whitepages
